@@ -58,7 +58,7 @@
 </header>
 
 <main>
-
+  {% if block('caroussel') is defined %}
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -109,13 +109,13 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-
+  {% endif %}
 
   <!-- Marketing messaging and featurettes
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
 
-  <div class="container marketing">
+  <div class="container marketing {% if block('caroussel') is not defined %}mt-5{% endif %}">
 
     <!-- &raquo; -->
     {% block content %}
