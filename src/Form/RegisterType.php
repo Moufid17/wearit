@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RegisterType extends AbstractType
@@ -36,21 +37,27 @@ class RegisterType extends AbstractType
                     'placeholder' => 'marc.adams@xyz.com'
                 ]
             ])
-            ->add('password',PasswordType::class,[
+            ->add('password',RepeatedType::class,[
+                'type' => PasswordType::class,
+                'invalid_message' => "The passwords don't match.",
                 'label' => 'Password',
-                'attr' => [
-                    'placeholder' => '**********'
+                'required' => true,
+                'first_options' => [
+                    'label' => "Password",
+                    'attr' => [
+                        'placeholder' => '**********'
+                    ]
+                ],
+                'second_options' => [
+                    'label' => "Confirm Password",
+                    'attr' => [
+                        'placeholder' => '**********'
+                    ]
                 ]
-            ])
-            ->add('cpassword',PasswordType::class,[
-                'label' => 'Confirm Password',
-                'mapped' => false,
-                'attr'  => [
-                    'placeholder' => '**********'
-                ]
+
             ])
             ->add('submit', SubmitType::class,[
-                'label' => 'Submit',
+                'label' => 'Register',
             ])
         ;
     }
