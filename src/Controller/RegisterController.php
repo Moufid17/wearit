@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
 {
@@ -27,7 +28,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class,$user);
@@ -38,11 +39,15 @@ class RegisterController extends AbstractController
             // Get data submit
             $user = $form->getData();
             
-            // Perssit submitted datas to db.
+            //HASH PASSWORD
+            $hashedPassword = $passwordEncoder->encodePassword($user,$user->getPassword());
+            // dd($hashedPassword);
+            $user->setPassword($hashedPassword);
+
+            // Persist and flush submitted datas to db.
             $this->em->persist($user);
             $this->em->flush();
-            dd($user);
-            
+            // dd($user);
         }
         return $this->render('register/index.html.twig', 
         [
