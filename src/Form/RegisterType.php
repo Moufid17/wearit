@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
 
 class RegisterType extends AbstractType
 {
@@ -19,14 +20,27 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('firstname',TextType::class, 
-            [
-                'label' => 'FirstName',
-                'attr' => [
-                    'placeholder' => 'Marc'
+                [
+                    'label' => 'FirstName',
+                    'constraints' => new Length([
+                        'min' => 4,
+                        'minMessage' => 'Firstname length must be at least 4.',
+                        'max' => 15,
+                        'maxMessage' => 'Firstname length must not exceed 15.'
+                    ]),
+                    'attr' => [
+                        'placeholder' => 'Marc'
+                    ]
                 ]
-            ])
+            )
             ->add('lastname',TextType::class, [
                 'label' => 'LastName',
+                'constraints' => new Length([
+                    'min' => 3,
+                    'minMessage' => 'Lastname length must be at least {{ limit }}.',
+                    'max' => 15,
+                    'maxMessage' => 'Lastname length must not exceed 15.'
+                ]),
                 'attr' => [
                     'placeholder' => 'ADAMS'
                 ]
@@ -41,15 +55,17 @@ class RegisterType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => "The passwords don't match.",
                 'label' => 'Password',
-                'required' => true,
+                
                 'first_options' => [
                     'label' => "Password",
+                    'required' => true,
                     'attr' => [
                         'placeholder' => '**********'
                     ]
                 ],
                 'second_options' => [
                     'label' => "Confirm Password",
+                    'required' => true,
                     'attr' => [
                         'placeholder' => '**********'
                     ]
