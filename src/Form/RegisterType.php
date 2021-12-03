@@ -21,7 +21,7 @@ class RegisterType extends AbstractType
         $builder
             ->add('firstname',TextType::class, 
                 [
-                    'label' => 'FirstName',
+                    'label' => 'Firstname',
                     'constraints' => new Length([
                         'min' => 4,
                         'minMessage' => 'Firstname length must be at least 4.',
@@ -34,7 +34,7 @@ class RegisterType extends AbstractType
                 ]
             )
             ->add('lastname',TextType::class, [
-                'label' => 'LastName',
+                'label' => 'Lastname',
                 'constraints' => new Length([
                     'min' => 3,
                     'minMessage' => 'Lastname length must be at least {{ limit }}.',
