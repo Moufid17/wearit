@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wearit - {{ product.name }}{% endblock %}
+
+{% block content %}
+    <div class="d-block">
+        <div class="">
+            <img class="img-fluid" src="/uploads/{{ product.illustration }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-item ">
+            <h5>{{  product.name }}</h5>
+            <span class="product-price">{{ (product.price/100)|number_format(2) }} €</span>
+            <hr>
+            <span class="product-desc">{{ product.description }}</span>
+        </div>
+    </div>
+{% endblock %}
